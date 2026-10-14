@@ -6,8 +6,8 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
+    font-family: "Times New Roman", serif;
+    background-color: #aec5eb;
     color: #333;
     line-height: 1.6;
 }
@@ -109,7 +109,7 @@ textarea {
     width: 100%;
     padding: 9px;
     border: 1px solid #ccc;
-    font-family: Arial, sans-serif;
+    font-family: inherit;
 }
 
 textarea {
