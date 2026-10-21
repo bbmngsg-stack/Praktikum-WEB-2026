@@ -31,12 +31,29 @@ display: flex; justify-content: space-between; align-items: center; background: 
  .badge { padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
  .badge-success { background: #dcfce7; color: #166534; }
  .badge-pending { background: #fef9c3; color: #854d0e; }
+ .project-form { display: grid; gap: 12px; margin: 20px 0; }
+ .project-form label { display: grid; gap: 5px; font-size: 14px; }
+ .project-form input, .project-form select, .project-form button, #project-search, .project-actions button { padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; }
+ .project-form button, .project-actions button { cursor: pointer; background: #ffffff; }
+ .project-form .completed-input { display: flex; align-items: center; gap: 8px; }
+ #project-search { width: 100%; margin-bottom: 12px; }
+ .project-actions { display: flex; flex-direction: column; gap: 8px; align-items: flex-end; }
  </style>
 </head>
 <body>
  <div class="container">
     <h1>Portofolio Proyek</h1>
  <p class="subtitle">Modul 4: Pengolahan Logika Data & Interaktivitas DOM</p>
+ <form id="project-form" class="project-form">
+ <label>Judul Proyek<input id="project-title" type="text" required></label>
+ <label>Kategori<select id="project-category" required>
+ <option value="Web App">Web App</option><option value="Mobile App">Mobile App</option>
+ <option value="Desktop App">Desktop App</option><option value="UI/UX Design">UI/UX Design</option>
+ </select></label>
+ <label>Estimasi Anggaran<input id="project-budget" type="number" min="1" required></label>
+ <label class="completed-input"><input id="project-completed" type="checkbox"> Sudah Selesai</label>
+ <button type="submit">Tambah Proyek</button>
+ </form>
  <!-- Kartu Ringkasan Statistik -->
  <div class="stats-grid">
  <div class="stat-card">
@@ -58,7 +75,9 @@ display: flex; justify-content: space-between; align-items: center; background: 
  <button class="btn-filter" data-category="Web App">Web App</button>
  <button class="btn-filter" data-category="Desktop App">Desktop App</button>
  <button class="btn-filter" data-category="Mobile App">Mobile App</button>
+ <button class="btn-filter" data-category="UI/UX Design">UI/UX Design</button>
  </div>
+ <input id="project-search" type="search" placeholder="Cari nama proyek..." aria-label="Cari nama proyek">
  <!-- Kontainer Daftar Proyek -->
  <div id="project-list"></div>
  </div>
