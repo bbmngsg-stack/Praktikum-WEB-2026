@@ -6,6 +6,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const taskInput = document.querySelector("#taskInput");
     const inputError = document.querySelector("#inputError");
     const todoList = document.querySelector("#todoList");
+    const taskSummary = document.querySelector("#taskSummary");
+    const clearCompleted = document.querySelector("#clearCompleted");
+    const confirmPopup = document.querySelector("#confirmPopup");
+    const cancelDelete = document.querySelector("#cancelDelete");
+    const confirmDelete = document.querySelector("#confirmDelete");
+    const defaultPlaceholder = "Ketikkan tugas baru Anda...";
+    let deleteIndex;
 
     // 2. Fungsi membaca dan menyimpan ke LocalStorage
     const getTasks = () => JSON.parse(localStorage.getItem("todo_tasks")) || [];
@@ -14,6 +21,11 @@ document.addEventListener("DOMContentLoaded", () => {
     // 3. Fungsi menampilkan daftar tugas ke layar
     const renderTasks = () => {
         const tasks = getTasks();
+        const completedTasks = tasks.filter((task) => task.completed).length;
+        const limitReached = tasks.length >= 5;
+        taskInput.classList.toggle("limit-reached", limitReached);
+        taskInput.placeholder = limitReached ? "Maksimal 5 tugas" : defaultPlaceholder;
+        taskSummary.textContent = `Total: ${tasks.length} Tugas | Selesai: ${completedTasks} | Belum Selesai: ${tasks.length - completedTasks}`;
         todoList.innerHTML = "";
 
         if (tasks.length === 0) {
@@ -45,8 +57,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const taskText = taskInput.value.trim();
 
         // Validasi input sederhana
-        if (taskText.length < 3) {
+        if (taskText.length < 5) {
             taskInput.classList.add("error");
+            inputError.textContent = "Tugas tidak boleh kosong atau kurang dari 5 karakter!";
             inputError.style.display = "block";
             return;
         }
@@ -57,6 +70,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Simpan tugas baru ke array LocalStorage
         const tasks = getTasks();
+        if (tasks.length >= 5) {
+            inputError.textContent = "Maksimal hanya 5 tugas!";
+            inputError.style.display = "block";
+            return;
+        }
+
         tasks.push({ text: taskText, completed: false });
         saveTasks(tasks);
 
@@ -76,10 +95,27 @@ document.addEventListener("DOMContentLoaded", () => {
             saveTasks(tasks);
             renderTasks();
         } else if (e.target.classList.contains("delete-btn")) {
-            tasks.splice(index, 1);
-            saveTasks(tasks);
-            renderTasks();
+            deleteIndex = Number(index);
+            confirmPopup.classList.add("show");
+            confirmDelete.focus();
         }
+    });
+
+    cancelDelete.addEventListener("click", () => {
+        confirmPopup.classList.remove("show");
+    });
+
+    confirmDelete.addEventListener("click", () => {
+        const tasks = getTasks();
+        tasks.splice(deleteIndex, 1);
+        saveTasks(tasks);
+        confirmPopup.classList.remove("show");
+        renderTasks();
+    });
+
+    clearCompleted.addEventListener("click", () => {
+        saveTasks(getTasks().filter((task) => !task.completed));
+        renderTasks();
     });
 
     // Render pertama kali saat halaman selesai dimuat

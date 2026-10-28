@@ -10,6 +10,7 @@
 <body>
     <div class="todo-app">
         <h2>Daftar Tugas Saya</h2>
+        <p id="taskSummary" class="task-summary"></p>
 
         <!-- Form Input Tugas -->
         <form id="todoForm" novalidate>
@@ -17,11 +18,22 @@
                 <input type="text" id="taskInput" placeholder="Ketikkan tugas baru Anda...">
                 <button type="submit" class="add-btn">Tambah</button>
             </div>
-            <div class="error-message" id="inputError">Tugas tidak boleh kosong atau kurang dari 3 karakter!</div>
+            <div class="error-message" id="inputError">Tugas tidak boleh kosong atau kurang dari 5 karakter!</div>
         </form>
 
         <!-- Daftar Tugas -->
         <ul class="todo-list" id="todoList"></ul>
+        <button type="button" class="clear-btn" id="clearCompleted">Bersihkan Tugas Selesai</button>
+    </div>
+
+    <div class="confirm-overlay" id="confirmPopup" role="dialog" aria-modal="true" aria-labelledby="confirmText">
+        <div class="confirm-box">
+            <p id="confirmText">Apakah Anda yakin ingin menghapus tugas ini?</p>
+            <div class="confirm-actions">
+                <button type="button" class="cancel-btn" id="cancelDelete">Cancel</button>
+                <button type="button" class="confirm-btn" id="confirmDelete">OK</button>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>
