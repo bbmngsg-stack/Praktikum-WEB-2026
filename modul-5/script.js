@@ -57,9 +57,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const taskText = taskInput.value.trim();
 
         // Validasi input sederhana
-        if (taskText.length < 5) {
+        if (taskText.length < 3) {
             taskInput.classList.add("error");
-            inputError.textContent = "Tugas tidak boleh kosong atau kurang dari 5 karakter!";
+            inputError.textContent = "Tugas tidak boleh kosong atau kurang dari 3 karakter!";
             inputError.style.display = "block";
             return;
         }
